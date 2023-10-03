@@ -1,16 +1,19 @@
 const mongoose = require('mongoose');
 const { DATABASE } = require('../settings/index')
 const { logger } = require('../utils/logger')
+const { formatCli } = require('../utils/prompts')
 
-const dbUri = `${DATABASE.DB_USER}:${DATABASE.DB_PASS}@${DATABASE.DB_HOST}`
+const dbCredentials = `${DATABASE.DB_USER}:${DATABASE.DB_PASS}@${DATABASE.DB_HOST}`
 
-const uri = `mongodb+srv://${dbUri}/?retryWrites=true&w=majority`
+const uri = `mongodb+srv://${dbCredentials}/?retryWrites=true&w=majority`
 
 mongoose
     .connect(uri, {
         useNewUrlParser: true,
     })
-    .then(() => logger.info(`${DATABASE.DB_USER} connected on ${DATABASE.DB_HOST} `))
+    .then(() => {
+        formatCli(` \x1b[1;37m[DB]\x1b[0m ${DATABASE.DB_USER} connected on ${DATABASE.DB_HOST}`)
+    })
     .catch(err => {
         logger.error(`Connection Error: ${err.message}`)
     })
@@ -18,7 +21,8 @@ mongoose
 const db = mongoose.connection
 
 db.on('close', () => {
-    logger.info(`Connection with ${DATABASE.DB_HOST} was terminated`)
+    formatCli(` \x1b[1;37m[DB]\x1b[0m Connection with ${DATABASE.DB_HOST} was terminated`)
 })
+
 module.exports = db;
 

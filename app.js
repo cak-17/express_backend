@@ -8,7 +8,7 @@ const userRouter = require('./routers/userRouter');
 const roomRouter = require('./routers/roomRouter');
 const reservationRouter = require('./routers/reservationRouter')
 
-const { promptListen } = require('./utils/prompts');
+const { promptListen, formatCli } = require('./utils/prompts');
 
 const { DEFAULTS } = require('./settings/index');
 const { errorMiddleware, notFoundMiddleware } = require("./middlewares/errors");
@@ -63,12 +63,11 @@ class Main {
                         this.retryAttempts--;
                     }, 1000);
                 }
-                // use utils/colors
-                else console.warn(`\x1b[0;31m[ERROR]\x1b[0m Address ${e.address}:${e.port} is already in use`)
+                // format to label
+                else console.warn(`\x1b[1;31m[ERROR]\x1b[0m Address ${e.address}:${e.port} is already in use`)
             }
         }).on('close', () => {
             db.close()
-            console.log('API is: \x1b[5;31mSTOPPED\x1b[0m')
         });
     }
 
