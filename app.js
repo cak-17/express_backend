@@ -49,9 +49,9 @@ class Main {
         this.#host = DEFAULTS.DEV_HOST
         this.#port = DEFAULTS.PORT
     }
-    runServer() {
+    runServer(input) {
         this.server.listen(this.#port, this.#host, () => {
-            promptListen(this.server)
+            if (!input) promptListen(this.server)
         }).on('error', (e) => {
             const errorCode = e.code
             if (errorCode === 'EADDRINUSE') {

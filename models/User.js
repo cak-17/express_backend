@@ -44,7 +44,7 @@ userSchema.methods.setPassword = function(password) {
 }
 
 userSchema.methods.validPassword = function(password) {
-	this.password === sha3_256(password);
+	return this.password === sha3_256(password);
 }
 
 userSchema.methods.resetPassword = function(oldPassword, newPassword) {

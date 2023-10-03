@@ -7,7 +7,7 @@ const DATABASE = {
     'DB_HOST': process.env.ATLAS_DB_HOST,
 };
 
-const DEFAULT_PORT = 8000;
+const DEFAULT_PORT = 3000;
 const DEFAULT_HOST = '0.0.0.0';
 const DEFAULT_DEV_HOST = 'localhost';
 const DEFAULT_RETRY = 5;

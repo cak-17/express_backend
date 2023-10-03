@@ -32,6 +32,7 @@ const promptListen = (server) => {
 
     info(host, port);
     console.log('⇢'.padStart(3) + ` \x1b[0;30mpress \x1b[1;37m[h]\x1b[0;30m to show help\x1b[0m\n`)
+
     readline.emitKeypressEvents(process.stdin);
     process.stdin.on('keypress', (ch, key) => {
         if (key.name == 'q' || key.sequence === '\x03') {
@@ -47,6 +48,7 @@ const promptListen = (server) => {
         }
     });
     process.stdin.setRawMode(true);
+
 }
 
 module.exports = {

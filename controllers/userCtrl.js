@@ -1,3 +1,4 @@
+const { sha3_256 } = require('js-sha3')
 const User = require('../models/User')
 
 getAll = async (req, res) => {
@@ -31,12 +32,18 @@ register = (req, res) => {
 
     const user = new User(body)
 
+
     if (!user) {
         return res.status(400).json({
             success: false,
             error: err,
         })
     }
+
+
+    user.setPassword(req.body.password)
+
+    console.log(user.password)
 
     user.save()
         .then(user => {
@@ -62,6 +69,7 @@ login = async (req, res) => {
                     error: 'User not found'
                 })
             }
+
             if (!user.validPassword(req.body.password)) {
                 return res.status(403).json({
                     success: false,
@@ -71,10 +79,10 @@ login = async (req, res) => {
             return res.status(200).json({
                 success: true,
                 data: user,
-            }).catch(err => {
-                console.log(err)
-                res.status(400).json({ success: false, error: err })
             })
+        }).catch(err => {
+            console.log(err)
+            res.status(400).json({ success: false, error: err })
         })
 }
 

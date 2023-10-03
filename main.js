@@ -25,6 +25,10 @@ yargs(hideBin(process.argv))
                 alias: 'd',
                 description: 'Runs API on dev server'
             })
+            .options('input', {
+                alias: 'I',
+                description: 'Disables User input for Docker'
+            })
         }, (argv) => {
             if (argv.port) {
                 Main.setPort(argv.port)
@@ -38,8 +42,8 @@ yargs(hideBin(process.argv))
             }
             if (argv.verbose) logger.debug(`Running Server on :${argv.port}`)
             logger.debug('API Server set in Production mode')
-            promptStart(DEFAULTS.APP_NAME)
-            Main.runServer()
+            promptStart()
+            Main.runServer(argv.input)
     })
     .count("verbose")
     .option('verbose', {
